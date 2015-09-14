@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.opentravel</groupId>
+    <artifactId>ota-review</artifactId>
+    <version>2014B</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.dir.resources>src/main/resources</project.dir.resources>
+        <project.dir.src>${project.dir.resources}/OpenTravel_2014B_XML</project.dir.src>
+        <project.dir.tmp>${project.build.directory}/tmp</project.dir.tmp>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/generated/*</exclude>
+                        <exclude>**/generated/</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <!-- before we begin, make a backup of the sources -->
+                    <execution>
+                        <id>backup-sources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy todir="${project.dir.tmp}">
+                                    <fileset dir="${project.dir.src}"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <!-- when we're done, restore the backup -->
+                    <execution>
+                        <id>restore-sources</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy todir="${project.dir.src}" overwrite="true" flatten="true">
+                                    <fileset dir="${project.dir.tmp}"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- this will run post-transform to generate java classes -->
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.12.3</version>
+                <executions>
+                    <execution>
+                        <id>modified-schema</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <removeOldOutput>false</removeOldOutput>
+                            <schemaDirectory>${project.dir.src}</schemaDirectory>
+                            <bindingDirectory>${project.dir.resources}</bindingDirectory>
+                            <enableIntrospection>true</enableIntrospection>
+                            <args>
+                                <arg>-extension</arg>
+                                <arg>-Xnamespace-prefix</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-namespace-prefix</artifactId>
+                        <version>1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

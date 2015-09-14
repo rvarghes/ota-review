@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jxb:bindings xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" version="2.1">
+
+	<jxb:bindings schemaLocation="OpenTravel_2014B_XML/OTA_CommonTypes.xsd">
+		<jxb:bindings node="//xs:element[@name='RequestedOffer']/xs:complexType/xs:sequence/xs:element[@name='TimePeriod']/xs:complexType/xs:sequence/xs:element[@name='EarliestStart']/xs:complexType/xs:sequence/xs:element[@name='CalculationMethod']/xs:complexType/xs:sequence/xs:element[@name='Duration']/xs:complexType/xs:simpleContent/xs:extension[@base='List_OfferDurationUOM']/xs:attribute[@name='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:element[@name='RequestedOffer']/xs:complexType/xs:sequence/xs:element[@name='TimePeriod']/xs:complexType/xs:sequence/xs:element[@name='MaximumDuration']/xs:complexType/xs:simpleContent/xs:extension[@base='List_OfferDurationUOM']/xs:attribute[@name='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='OntologyDistanceType']/xs:sequence/xs:element/xs:complexType/xs:simpleContent/xs:extension[@base='List_OfferDistanceUOM']/xs:attribute[@name='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+
+		<jxb:bindings node="//xs:complexType[@name='OntologyTimeDurationType']/xs:choice/xs:element[@name='StartAndEnd']/xs:complexType/xs:choice/xs:element[@name='Duration']/xs:complexType/xs:simpleContent/xs:extension[@base='List_OfferDurationUOM']/xs:attribute[@name='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+	</jxb:bindings>
+
+	<jxb:bindings schemaLocation="OpenTravel_2014B_XML/OTA_Lists.xsd">
+		<jxb:bindings node="//xs:simpleType[@name='List_QuestionCategory_Base']/xs:restriction/xs:enumeration[@value='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+	</jxb:bindings>
+
+	<!-- <jxb:bindings schemaLocation="OpenTravel_2014B_XML/OTA_RailAvailRS.xsd">
+		<jxb:bindings node="//xs:complexType[@name='PriceRuleType']/xs:simpleContent/xs:extension[@base='StringLength1to128']/xs:attribute[@name='Value']">
+			<jxb:property name="ValueAttribute" />
+		</jxb:bindings>
+	</jxb:bindings> -->
+	
+	<!-- <jxb:bindings schemaLocation="OpenTravel_2014B_XML/OTA_AirBaggageRS.xsd">
+		<jxb:bindings node="//xs:element[@name='OTA_AirBaggageRS']/xs:complexType/xs:sequence/xs:element[@name='BaggageList']/xs:complexType/xs:sequence/xs:element[@name='OriginDestination']/xs:complexType/xs:sequence/xs:element[@name='BaggageDetail']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='ServiceFamily']/xs:complexType/xs:sequence/xs:element[@name='ProductGroup']/xs:complexType/xs:sequence/xs:element[@name='SubGroup']/xs:complexType/xs:sequence/xs:element[@name='Description']">
+			<jxb:property name="BaggageDetailDescription" />
+		</jxb:bindings>
+	</jxb:bindings> -->
+
+</jxb:bindings>
